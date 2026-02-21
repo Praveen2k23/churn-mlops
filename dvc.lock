@@ -1,0 +1,97 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: data/raw/telco_customer_churn_data.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 90dc70a893dfabad3f34e0aac3c4875a
+      size: 650
+    outs:
+    - path: data/raw/churn_raw.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+  preprocessing:
+    cmd: python src/preprocessing.py
+    deps:
+    - path: data/raw/churn_raw.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+    - path: src/preprocessing.py
+      hash: md5
+      md5: cc520cd8d0d57306f7dc26d3197d282e
+      size: 2021
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: f919c70f595bd1a7e0d3f801dac57776
+      size: 129274
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 731023e2430d0405868a865b2dc9a773
+      size: 516381
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 0d63c27dd2c00d024181260dfce2174c
+      size: 4228
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: e4fa3c0104b0b85d3ba7a71879bcd54f
+      size: 16882
+    - path: models/scaler.pkl
+      hash: md5
+      md5: de97bfe09faf1a3428c4663ab79dd7c3
+      size: 927
+  training:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: f919c70f595bd1a7e0d3f801dac57776
+      size: 129274
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 731023e2430d0405868a865b2dc9a773
+      size: 516381
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 0d63c27dd2c00d024181260dfce2174c
+      size: 4228
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: e4fa3c0104b0b85d3ba7a71879bcd54f
+      size: 16882
+    - path: src/train.py
+      hash: md5
+      md5: e9689e6976b1c02fdcd2e244fad4fd83
+      size: 2809
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: 09bd736f35ea0f0e43a6e2fb68a35c04
+      size: 17605641
+  evaluation:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: f919c70f595bd1a7e0d3f801dac57776
+      size: 129274
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 0d63c27dd2c00d024181260dfce2174c
+      size: 4228
+    - path: models/best_model.pkl
+      hash: md5
+      md5: 09bd736f35ea0f0e43a6e2fb68a35c04
+      size: 17605641
+    - path: src/evaluate.py
+      hash: md5
+      md5: 4a1994fdd6be3bb54925eef60ba0b88e
+      size: 928

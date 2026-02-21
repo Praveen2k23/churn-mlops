@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+xgboost
+mlflow
+dagshub
+fastapi
+uvicorn
+dvc
+dvc-http
+apache-airflow
+matplotlib
+seaborn
+joblib
+pydantic
